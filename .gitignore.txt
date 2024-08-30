@@ -1,0 +1,7 @@
+in/
+out/
+dist/
+build/
+*/locate_Datas.py
+*/Force Data Collector.spec
+*/collectForceData.spec
