@@ -25,8 +25,8 @@ class ForceDisplacementApp(ctk.CTk):
         self.geometry("1200x800")
 
         # Initialize serial variables
-        self.force_port_var = ctk.StringVar(value="COM4")  # Default COM port for force sensor
-        self.displacement_port_var = ctk.StringVar(value="COM5")  # Default COM port for displacement sensor
+        self.force_port_var = ctk.StringVar(value="COM9")  # Default COM port for force sensor
+        self.displacement_port_var = ctk.StringVar(value="COM8")  # Default COM port for displacement sensor
         self.baud_rate = 115200
         self.serial_force_connection = None
         self.serial_displacement_connection = None
@@ -52,7 +52,7 @@ class ForceDisplacementApp(ctk.CTk):
         self.displacement_port_entry = ctk.CTkEntry(self, textvariable=self.displacement_port_var)
         self.displacement_port_entry.grid(row=1, column=1, padx=20, pady=10)
 
-        self.start_force_var = ctk.DoubleVar(value=1.0)  # Threshold to start recording
+        self.start_force_var = ctk.DoubleVar(value=0.05)  # Threshold to start recording
         self.readings_per_sec_var = ctk.IntVar(value=5)  # Readings per second
 
         self.force_label = ctk.CTkLabel(self, text="Start Force (N):")
@@ -83,8 +83,8 @@ class ForceDisplacementApp(ctk.CTk):
         self.displacement_data = deque(maxlen=100)
         self.force_data = deque(maxlen=100)
         self.line_force_disp, = self.ax_force_disp.plot([], [], 'r-')
-        self.ax_force_disp.set_ylim(0, 50)
-        self.ax_force_disp.set_xlim(0, 100)
+        self.ax_force_disp.set_ylim(0, 25)
+        self.ax_force_disp.set_xlim(0, 50)
         self.ax_force_disp.set_ylabel('Force (N)')
         self.ax_force_disp.set_xlabel('Displacement (mm)')
 
@@ -127,8 +127,8 @@ class ForceDisplacementApp(ctk.CTk):
     def collect_data(self):
         # Open serial connections for force and displacement
         try:
-            self.serial_force_connection = serial.Serial(self.force_port_var.get(), self.baud_rate, timeout=1)
-            self.serial_displacement_connection = serial.Serial(self.displacement_port_var.get(), self.baud_rate, timeout=1)
+            self.serial_force_connection = serial.Serial(self.force_port_var.get(), self.baud_rate, timeout=0.2)
+            self.serial_displacement_connection = serial.Serial(self.displacement_port_var.get(), self.baud_rate, timeout=0.2)
             print('Serial connections opened....')
         except serial.SerialException as e:
             print(f"Error opening serial port: {e}")
@@ -136,8 +136,10 @@ class ForceDisplacementApp(ctk.CTk):
             self.start_button.configure(state=ctk.NORMAL)
             return
 
-        self.serial_force_connection.write(bytes.fromhex("3f0d"))  # Send hex command for force sensor
-        print('3f0d')
+        #self.serial_force_connection.write(bytes.fromhex("3f0d"))  # Send hex command for force sensor
+        #print('3f0d')
+        #self.serial_displacement_connection.write(bytes.fromhex("310d"))  # Send hex command for force sensor
+        #print('310d')
 
         readings_per_sec = self.readings_per_sec_var.get()
         delay = 1 / readings_per_sec
@@ -146,40 +148,45 @@ class ForceDisplacementApp(ctk.CTk):
         previous_displacement = 0
         previous_time = 0
 
+
         while True:
-            time.sleep(delay)
+            #time.sleep(0.001)
             self.serial_force_connection.write(bytes.fromhex("3f0d"))
             raw_force_data = self.serial_force_connection.readline().decode('utf-8').strip()
 
-            self.serial_displacement_connection.write(bytes.fromhex("3f0d"))  # Hex command for displacement
+            self.serial_displacement_connection.write(bytes.fromhex("310d"))  # Hex command for displacement
             raw_displacement_data = self.serial_displacement_connection.readline().decode('utf-8').strip()
 
             try:
                 force_value = float(raw_force_data.replace(" N", ""))
-                displacement_value = float(raw_displacement_data.replace(" mm", ""))
+                displacement_value = self.parse_displacement(raw_displacement_data)
+                #print(f'{force_value}N and {displacement_value}mm')
             except ValueError:
+                print('value error')
                 continue
 
             if force_value >= start_force:
                 start_time = time.time()
                 initial_displacement = displacement_value  # Set displacement starting point to zero
-
+                loop_start_time = time.time()
+                self.last_table_update_index = 0  # Track last index of data added to the table  
                 while self.collecting_data:
-                    current_time = time.time() - start_time
+                    current_time = loop_start_time - start_time
                     self.serial_force_connection.write(bytes.fromhex("3f0d"))
                     raw_force_data = self.serial_force_connection.readline().decode('utf-8').strip()
 
-                    self.serial_displacement_connection.write(bytes.fromhex("3f0d"))  # Hex command for displacement
+                    self.serial_displacement_connection.write(bytes.fromhex("310d"))  # Hex command for displacement
                     raw_displacement_data = self.serial_displacement_connection.readline().decode('utf-8').strip()
+                    
 
                     try:
                         force_value = float(raw_force_data.replace(" N", ""))
-                        displacement_value = float(raw_displacement_data.replace(" mm", ""))
+                        displacement_value = self.parse_displacement(raw_displacement_data)
                     except ValueError:
                         break
 
-                    adjusted_displacement = displacement_value - initial_displacement  # Start at 0
-
+                    adjusted_displacement = abs(displacement_value - initial_displacement)  # Start at 0
+                   
                     # Calculate velocity
                     if previous_time > 0:
                         delta_time = current_time - previous_time
@@ -190,30 +197,61 @@ class ForceDisplacementApp(ctk.CTk):
 
                     previous_displacement = adjusted_displacement
                     previous_time = current_time
-
+                    
                     # Append data to storage lists
                     self.time_data.append(current_time)
                     self.force_data.append(force_value)
                     self.displacement_data.append(adjusted_displacement)
                     self.velocity_data.append(velocity_value)
+                    
+                    if len(self.time_data) % 5 == 0:  # Update every 5 iterations
+                        # Update the force vs displacement graph
+                        self.update_graph()
+                        self.update_table()
 
-                    # Update the force vs displacement graph
-                    self.ax_force_disp.set_xlim(0, max(10, adjusted_displacement))
+                    loop_end_time = time.time()
+                    loop_duration = loop_end_time - loop_start_time
+                    
+                    if loop_duration < delay:
+                        time.sleep(delay - loop_duration)
+                    loop_start_time = time.time()
 
-                    # Update the velocity vs time graph
-                    self.ax_velocity_time.set_xlim(0, max(10, current_time))
+    def update_table(self):
+        # Update table with new entries since last update
+        for i in range(self.last_table_update_index, len(self.time_data)):
+            # Add new data rows to the table
+            self.table.insert(ctk.END, f"{self.time_data[i]:.2f}\t{self.force_data[i]:.2f}\t"
+                                    f"{self.displacement_data[i]:.2f}\t{self.velocity_data[i]:.2f}\n")
+    
+        # Scroll to the bottom of the table
+        self.table.yview_moveto(1)
 
-                    # Update the table
-                    self.table.insert(ctk.END, f"{current_time:.2f}\t{force_value:.2f}\t{adjusted_displacement:.2f}\t{velocity_value:.2f}\n")
-                    self.table.yview_moveto(1)
+        # Update the last index to the current length of the data lists
+        self.last_table_update_index = len(self.time_data)
+        print(self.last_table_update_index)
 
-                    self.canvas.draw()
-                    time.sleep(delay)
+
+    def update_graph(self):
+        # Update the force vs displacement graph
+        self.ax_force_disp.set_xlim(0, max(10, self.displacement_data[-1]))
+
+        # Update the velocity vs time graph
+        self.ax_velocity_time.set_xlim(0, max(10, self.time_data[-1]))
+
+        # Update the canvas
+        self.canvas.draw()
 
     def update_plot(self, frame):
         self.line_force_disp.set_data(self.displacement_data, self.force_data)
         self.line_velocity_time.set_data(self.time_data, self.velocity_data)
         return self.line_force_disp, self.line_velocity_time
+    
+    def parse_displacement(self, raw_data):
+        # Example displacement format: "01A+00024.35"
+        try:
+            return float(raw_data[3:])  # Extract the number after "01A+"
+        except ValueError:
+            return 0
 
     def save_data(self):
         if not self.time_data or not self.force_data:
