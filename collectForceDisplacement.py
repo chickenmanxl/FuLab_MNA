@@ -95,7 +95,7 @@ class ForceDisplacementApp(ctk.CTk):
         self.time_data_f = deque(maxlen=100)
         self.time_data_d = deque(maxlen=100)
         self.line_velocity_time, = self.ax_velocity_time.plot([], [], 'b-')
-        self.ax_velocity_time.set_ylim(0, 1)
+        self.ax_velocity_time.set_ylim(0, .25)
         self.ax_velocity_time.set_xlim(0, 10)
         self.ax_velocity_time.set_ylabel('Velocity (mm/s)')
         self.ax_velocity_time.set_xlabel('Time (s)')
@@ -159,7 +159,7 @@ class ForceDisplacementApp(ctk.CTk):
         # Reset the list of table labels
         self.table_labels = []
 
-        self.ax_velocity_time.set_ylim(0, 1)
+        self.ax_velocity_time.set_ylim(0, .25)
         self.ax_velocity_time.set_xlim(0, 10)
         self.ax_force_disp.set_ylim(0, 2)
         self.ax_force_disp.set_xlim(0, 1)
@@ -241,8 +241,8 @@ class ForceDisplacementApp(ctk.CTk):
                     raw_force_data = self.serial_force_connection.readline().decode('utf-8').strip()
                     raw_displacement_data = self.serial_displacement_connection.readline().decode('utf-8').strip()
                     
-                    delta_time = current_time_f-current_time_d
-                    print(delta_time)
+                    delta_time_rec = current_time_f-current_time_d
+                    print(delta_time_rec)
 
                     try:
                         force_value = float(raw_force_data.replace(" N", ""))
@@ -269,7 +269,7 @@ class ForceDisplacementApp(ctk.CTk):
                     self.time_data_d.append(current_time_d)
                     self.displacement_data.append(adjusted_displacement)
                     self.velocity_data.append(velocity_value)
-                    self.delta_time_data.append(delta_time)
+                    self.delta_time_data.append(delta_time_rec)
                     
                     if len(self.time_data_f) % 5 == 0:  # Update every 5 iterations
                         # Update the force vs displacement graph
@@ -311,7 +311,7 @@ class ForceDisplacementApp(ctk.CTk):
         self.ax_force_disp.set_ylim(0, max(2, self.force_data[-1]+2))
 
         # Update the velocity vs time graph
-        self.ax_velocity_time.set_ylim(0, max(1, max(self.velocity_data)))
+        self.ax_velocity_time.set_ylim(0, max(.25, max(self.velocity_data)))
         self.ax_velocity_time.set_xlim(0, max(10, self.time_data_d[-1]+2))
 
         # Update the canvas
