@@ -45,6 +45,6 @@ def stitch_images(image_dir, output_dir):
         new_image.save(output_path)
         print(f"Saved combined image: {output_path}")
 
-image_dir = 'C:\\Users\\cneje\\Downloads\\Caleb MNA Images\\AM\\Cropped'  # Directory containing your cropped images
-output_dir = 'C:\\Users\\cneje\\Downloads\\Caleb MNA Images\\AM\\combined'  # Directory to save the combined images
+image_dir = 'C:\\Users\\cneje\\Downloads\\2024_10_22-24_MNA_Testing\\Cropped'  # Directory containing your cropped images
+output_dir = 'C:\\Users\\cneje\\Downloads\\2024_10_22-24_MNA_Testing\\combined'  # Directory to save the combined images
 stitch_images(image_dir, output_dir)
