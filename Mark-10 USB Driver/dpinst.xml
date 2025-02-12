@@ -1,0 +1,148 @@
+<?xml version="1.0" ?>
+<dpinst>
+<enableNotListedLanguages/>
+<language code="0x0401">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0804">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0404">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0405">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0406">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0407">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0408">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0409">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0C0A">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x040B">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x040C">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x040D">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x040E">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0410">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0411">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0412">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0414">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0413">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0415">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0416">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0816">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x0419">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x041D">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+<language code="0x041F">
+<dpinstTitle>Mark-10 USB Device Driver Installer</dpinstTitle>
+<welcomeTitle>Welcome to the Mark-10 USB Device Driver Installer</welcomeTitle>
+<welcomeIntro>This wizard will help you install the drivers for your Mark-10 USB Device device.</welcomeIntro>
+<finishTitle>Completing the Installation of the Mark-10 USB Device Driver</finishTitle>
+</language>
+</dpinst>

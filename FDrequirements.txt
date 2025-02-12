@@ -1,0 +1,6 @@
+customtkinter
+serial
+time
+threading
+matplotlib
+pandas
