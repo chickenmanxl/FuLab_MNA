@@ -2,11 +2,11 @@ from PIL import Image
 import os
 
 # Directory containing BMP images
-input_dir = 'C:\\Users\\cneje\\Downloads\\Caleb MNA Images\\AM'
-output_dir = 'C:\\Users\\cneje\\Downloads\\Caleb MNA Images\\AM\\Cropped'
+input_dir = 'C:\\Users\\cneje\\Downloads\\2024_10_22-24_MNA_Testing'
+output_dir = 'C:\\Users\\cneje\\Downloads\\2024_10_22-24_MNA_Testing\\Cropped'
 
 # Desired crop size (left, upper, right, lower)
-crop_box = (515, 190, 865, 960)
+crop_box = (150, 200, 2592, 1809)
 
 # Create output directory if it doesn't exist
 if not os.path.exists(output_dir):
