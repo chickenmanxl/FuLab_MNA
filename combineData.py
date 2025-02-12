@@ -59,10 +59,10 @@ def process_excel_files(folder_path, output_path):
     print('done!')
 
 # Folder containing your Excel files
-folder_path = 'C:\\Users\\cneje\\Downloads\\2024_11_7-12_MNA_Insertion_Testing\\clear insertion'
+folder_path = 'C:\\Users\\cneje\\Downloads\\2024_01_ClearMN Cure Testing\\ForceData'
 
 # Output file path
-output_file = 'C:\\Users\\cneje\\Downloads\\2024_11_7-12_MNA_Insertion_Testing\\clear insertion\\full_clear_combined_data.xlsx'
+output_file = 'C:\\Users\\cneje\\Downloads\\2024_01_ClearMN Cure Testing\\ForceData\\prelim_combined_data.xlsx'
 
 # Run the function to process files and create the output
 process_excel_files(folder_path, output_file)
