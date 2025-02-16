@@ -42,44 +42,44 @@ class ForceDisplacementApp(ctk.CTk):
 
         # UI elements for force port
         self.force_port_label = ctk.CTkLabel(self, text="Force Sensor COM Port:")
-        self.force_port_label.grid(row=0, column=0, padx=20, pady=10)
+        self.force_port_label.grid(row=0, column=0, padx=20, pady=10, sticky="NSE")
 
         self.force_port_entry = ctk.CTkEntry(self, textvariable=self.force_port_var)
-        self.force_port_entry.grid(row=0, column=1, padx=20, pady=10)
+        self.force_port_entry.grid(row=0, column=2, padx=20, pady=10, sticky="NSW")
 
         # UI elements for displacement port
         self.displacement_port_label = ctk.CTkLabel(self, text="Displacement Sensor COM Port:")
-        self.displacement_port_label.grid(row=1, column=0, padx=20, pady=10)
+        self.displacement_port_label.grid(row=1, column=0, padx=20, pady=10, sticky="NSE")
 
         self.displacement_port_entry = ctk.CTkEntry(self, textvariable=self.displacement_port_var)
-        self.displacement_port_entry.grid(row=1, column=1, padx=20, pady=10)
+        self.displacement_port_entry.grid(row=1, column=2, padx=20, pady=10, sticky="NSW")
 
         self.start_force_var = ctk.DoubleVar(value=0.05)  # Threshold to start recording
         self.readings_per_sec_var = ctk.IntVar(value=5)  # Readings per second
 
         self.force_label = ctk.CTkLabel(self, text="Start Force (N):")
-        self.force_label.grid(row=2, column=0)
+        self.force_label.grid(row=2, column=0, padx=20, pady=10, sticky="NSE")
 
         self.start_force_entry = ctk.CTkEntry(self, textvariable=self.start_force_var)
-        self.start_force_entry.grid(row=2, column=1)
+        self.start_force_entry.grid(row=2, column=2, padx=20, pady=10, sticky="NSW")
 
         self.rps_label = ctk.CTkLabel(self, text="Readings per Second:")
-        self.rps_label.grid(row=3, column=0)
+        self.rps_label.grid(row=3, column=0, padx=20, pady=10, sticky="NSE")
 
         self.rps_entry = ctk.CTkEntry(self, textvariable=self.readings_per_sec_var)
-        self.rps_entry.grid(row=3, column=1)
+        self.rps_entry.grid(row=3, column=2, padx=20, pady=10, sticky="NSW")
 
         self.start_button = ctk.CTkButton(self, text="Start Collection", command=self.start_collection)
-        self.start_button.grid(row=4, column=0, padx=20, pady=20)
+        self.start_button.grid(row=4, column=0, padx=20, pady=10, sticky="NSE")
 
         self.stop_button = ctk.CTkButton(self, text="Stop Collection", command=self.stop_collection)
-        self.stop_button.grid(row=4, column=1, padx=20, pady=20)
+        self.stop_button.grid(row=4, column=2, padx=20, pady=10, sticky="NSW")
 
         self.save_button = ctk.CTkButton(self, text="Save Data", command=self.save_data)
-        self.save_button.grid(row=5, column=0, columnspan=2, pady=10)
+        self.save_button.grid(row=5, column=0,columnspan=3, padx=20, pady=10, sticky="NSEW")
 
         # Plot setup: Force vs Displacement
-        self.fig, (self.ax_force_disp, self.ax_velocity_time) = plt.subplots(2, 1, gridspec_kw={'height_ratios': [3, 1]})
+        self.fig, (self.ax_force_disp, self.ax_velocity_time) = plt.subplots(2, 1, gridspec_kw={'height_ratios': [3, 1], 'hspace': 0.5})
 
         # Plot for force vs displacement
         self.displacement_data = [] #deque(maxlen=100)
@@ -101,7 +101,7 @@ class ForceDisplacementApp(ctk.CTk):
         self.ax_velocity_time.set_xlabel('Time (s)')
 
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)
-        self.canvas.get_tk_widget().grid(row=6, column=0, columnspan=2, pady=10, padx=20, sticky="nsew")
+        self.canvas.get_tk_widget().grid(row=6, column=0, columnspan=3, pady=10, padx=10, sticky="nsew")
 
         self.anim = animation.FuncAnimation(self.fig, self.update_plot, interval=100, save_count=30000)
     
@@ -131,7 +131,7 @@ class ForceDisplacementApp(ctk.CTk):
         # Layout management
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(2, weight=1)
-        #self.grid_rowconfigure(6, weight=1)
+        self.grid_rowconfigure(6, weight=1)
 
     def start_collection(self):
         # Clear previously collected data, table, and graphs
