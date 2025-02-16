@@ -22,6 +22,7 @@ class ForceDisplacementApp(ctk.CTk):
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         self.title("Force, Displacement, and Velocity Data Acquisition")
+        self.minsize(600, 800)  # Set minimum width to 600px and height to 800px
         #self.geometry("1200x800")
 
         # Initialize serial variables
