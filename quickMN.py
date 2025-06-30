@@ -60,6 +60,7 @@ class MicroneedleMeasurementApp:
     def load_images(self):
         folder = filedialog.askdirectory()
         if folder:
+            self.folder = folder
             self.image_list = [os.path.join(folder, f) for f in os.listdir(folder) if f.endswith(('png', 'jpg', 'jpeg', 'bmp'))]
             self.current_image_index = 0
             self.load_next_image()
@@ -72,6 +73,7 @@ class MicroneedleMeasurementApp:
             self.original_image_size = self.image.shape[:2]
             self.display_image()
             self.points = []
+            print(self.current_image_index)
         else:
             self.save_to_excel()
             print("No more images.")
@@ -92,7 +94,7 @@ class MicroneedleMeasurementApp:
         old_width = img.width
         img = img.resize((new_width, new_height), Image.LANCZOS)
         self.new_img_scale = img.width / old_width
-        print(self.new_img_scale)
+        #print(self.new_img_scale)
         self.tk_image = ImageTk.PhotoImage(img)
         self.canvas.config(width=new_width, height=new_height)
         self.canvas.create_image(0, 0, anchor='nw', image=self.tk_image)
@@ -131,10 +133,20 @@ class MicroneedleMeasurementApp:
             tip_vector2 = p3 - p4
             angle_radians = np.arccos(np.dot(tip_vector1, tip_vector2) / (np.linalg.norm(tip_vector1) * np.linalg.norm(tip_vector2)))
             tip_sharpness = np.degrees(angle_radians)
+
+            # Calculate tip width
+            tip_width = np.linalg.norm(np.array(self.points[2]) - np.array(self.points[3])) / scale
             
             comment = self.comment_entry.get() + (". " + offset_note if offset_note else "")
+
+            # Convert file path to useful data lables
+            filename = os.path.basename(self.image_path)
+            name_parts = filename.split('_')
+            filtered_name = name_parts[0] + '_' + name_parts[1] + '_' + name_parts[2]
+            needle_number = name_parts[-1].rsplit('.', 1)[0]
             
-            self.data.append([self.image_path, base_width, needle_height, tip_sharpness, comment])
+            # Store data
+            self.data.append([filtered_name, needle_number, base_width, needle_height, tip_width, tip_sharpness, comment])
             self.current_image_index += 1
             self.load_next_image()
         else:
@@ -147,9 +159,19 @@ class MicroneedleMeasurementApp:
         self.load_next_image()
 
     def save_to_excel(self):
-        df = pd.DataFrame(self.data, columns=["Image", "Base Width", "Needle Height", "Tip Sharpness", "Comment"])
-        df.to_excel("microneedle_measurements.xlsx", index=False)
-        print("Data saved to microneedle_measurements.xlsx")
+        df = pd.DataFrame(self.data, columns=["Needle Type", "Needle Number", "Base Width", "Needle Height", "Tip Width", "Tip Sharpness", "Comment"])
+        df.to_csv(f"{self.folder}\\microneedle_measurements.csv", index=False)
+        print("Data saved to microneedle_measurements.csv")
+
+        summary = df.groupby("Needle Type").describe(percentiles=[])
+
+        # Flatten MultiIndex columns
+        summary.columns = ['_'.join(col).strip() for col in summary.columns.values]
+        summary.reset_index(inplace=True)
+
+        # Save to CSV
+        summary.to_csv(f"{self.folder}\\microneedle_summary.csv", index=False)
+        print("Summary saved to microneedle_summary.csv")
 
 if __name__ == "__main__":
     root = ctk.CTk()
