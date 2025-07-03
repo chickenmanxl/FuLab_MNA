@@ -92,9 +92,9 @@ class ForceDisplacementApp(ctk.CTk):
         self.ax_force_disp.set_xlabel('Displacement (mm)')
 
         # Plot for velocity vs time
-        self.velocity_data = [] #deque(maxlen=100)
-        self.time_data_f = [] #deque(maxlen=100)
-        self.time_data_d = [] #deque(maxlen=100)
+        self.velocity_data = []
+        self.time_data_f = [] 
+        self.time_data_d = [] 
         self.line_velocity_time, = self.ax_velocity_time.plot([], [], 'b-')
         self.ax_velocity_time.set_ylim(0, 1)
         self.ax_velocity_time.set_xlim(0, 30)
@@ -105,29 +105,6 @@ class ForceDisplacementApp(ctk.CTk):
         self.canvas.get_tk_widget().grid(row=6, column=0, columnspan=3, pady=10, padx=10, sticky="nsew")
 
         self.anim = animation.FuncAnimation(self.fig, self.update_plot, interval=100, save_count=30000)
-    
-
-        # Table setup
-        # Create a frame to hold the table
-        #self.table_frame = ctk.CTkScrollableFrame(self)
-        #self.table_frame.grid(row=0, column=2, rowspan=10, padx=20, pady=20, sticky="nsew")
-    
-        # Add headers for the table
-        #headers = ["Time (s)", "Force (N)", "Displacement (mm)", "Velocity (mm/s)"]
-        #for col, header in enumerate(headers):
-        #    header_label = ctk.CTkLabel(self.table_frame, text=header, font=("Arial", 12, "bold"))
-        #    header_label.grid(row=0, column=col, padx=10, pady=5, sticky="new")
-
-        # Create a list to store the labels for the data
-        #self.table_labels = []
-
-        # Configure the grid to allow resizing
-        #self.grid_rowconfigure(5, weight=1)  # Row 5 contains the table and should expand
-        #self.grid_columnconfigure(2, weight=1)  # Column 2 contains the table and should expand
-
-        #self.table_frame.grid_rowconfigure(0, weight=1)  # Allow the table content to scale
-        #for col in range(len(headers)):  # Allow all columns in the table to scale
-        #    self.table_frame.grid_columnconfigure(col, weight=1)
 
         # Layout management
         self.grid_columnconfigure(0, weight=1)
@@ -153,18 +130,11 @@ class ForceDisplacementApp(ctk.CTk):
         self.velocity_data.clear()
         self.delta_time_data.clear()
 
-        #for labels in self.table_labels:
-        #    for label in labels:
-        #        label.grid_forget()  # This removes the label from the grid layout
-        #        label.destroy()      # This destroys the label widget completely
-       # Reset the list of table labels
-        #self.table_labels = []
+        # Reset plot bounds
         self.ax_velocity_time.set_ylim(0, 1)
         self.ax_velocity_time.set_xlim(0, 30)
         self.ax_force_disp.set_ylim(0, 2)
         self.ax_force_disp.set_xlim(0, 1)
-
-        #self.update_plot()
 
     def stop_collection(self):
         # Stop the data collection loop
@@ -197,11 +167,6 @@ class ForceDisplacementApp(ctk.CTk):
             self.start_button.configure(state=ctk.NORMAL)
             return
 
-        #self.serial_force_connection.write(bytes.fromhex("3f0d"))  # Send hex command for force sensor
-        #print('3f0d')
-        #self.serial_displacement_connection.write(bytes.fromhex("310d"))  # Send hex command for force sensor
-        #print('310d')
-
         readings_per_sec = self.readings_per_sec_var.get()
         delay = 1 / readings_per_sec
         start_force = self.start_force_var.get()
@@ -211,7 +176,6 @@ class ForceDisplacementApp(ctk.CTk):
 
 
         while True:
-            #time.sleep(0.001)
             self.serial_force_connection.write(bytes.fromhex("3f0d"))
             raw_force_data = self.serial_force_connection.readline().decode('utf-8').strip()
 
@@ -221,7 +185,6 @@ class ForceDisplacementApp(ctk.CTk):
             try:
                 force_value = float(raw_force_data.replace(" N", ""))
                 displacement_value = self.parse_displacement(raw_displacement_data)
-                #print(f'{force_value}N')
             except ValueError:
                 print('value error')
                 continue
@@ -242,7 +205,6 @@ class ForceDisplacementApp(ctk.CTk):
                     raw_displacement_data = self.serial_displacement_connection.readline().decode('utf-8').strip()
                     
                     delta_time_rec = current_time_f-current_time_d
-                    #print(delta_time_rec)
 
                     try:
                         force_value = float(raw_force_data.replace(" N", ""))
@@ -271,12 +233,7 @@ class ForceDisplacementApp(ctk.CTk):
                     self.velocity_data.append(velocity_value)
                     self.delta_time_data.append(delta_time_rec)
                     
-                    #if len(self.time_data_f) % 5 == 0:  # Update every 5 iterations
-                    #    # Update the force vs displacement graph
                     self.update_graph()
-                    #    self.update_table()
-                    #print(len(self.displacement_data))
-
 
                     loop_end_time = time.time()
                     loop_duration = loop_end_time - loop_start_time_f
@@ -284,29 +241,7 @@ class ForceDisplacementApp(ctk.CTk):
                     if loop_duration < delay:
                         time.sleep(delay - loop_duration)
 
-    #def update_table(self):
-    #    # Update the table with all new entries since the last update
-    #    for i in range(self.last_table_update_index, len(self.time_data_f)):
-    #        row_num = i + 1  # Rows start from 1 because row 0 is the header
-    #        time_label = ctk.CTkLabel(self.table_frame, text=f"{self.time_data_f[i]:.2f}")
-    #        time_label.grid(row=row_num, column=0, padx=10, pady=5, sticky="ew")
-#
-    #        force_label = ctk.CTkLabel(self.table_frame, text=f"{self.force_data[i]:.2f}")
-    #        force_label.grid(row=row_num, column=1, padx=10, pady=5, sticky="ew")
-#
-    #        displacement_label = ctk.CTkLabel(self.table_frame, text=f"{self.displacement_data[i]:.2f}")
-    #        displacement_label.grid(row=row_num, column=2, padx=10, pady=5, sticky="ew")
-#
-    #        velocity_label = ctk.CTkLabel(self.table_frame, text=f"{self.velocity_data[i]:.2f}")
-    #        velocity_label.grid(row=row_num, column=3, padx=10, pady=5, sticky="ew")
-#
-    #        # Add to the list of labels to keep track of them
-    #        self.table_labels.append((time_label, force_label, displacement_label, velocity_label))
-#
-    #    # Update the last index to the current length of the data lists
-    #    self.last_table_update_index = len(self.time_data_f)
-#
-#
+
     def update_graph(self):
         # Update the force vs displacement graph
         self.ax_force_disp.set_xlim(0, max(1, self.displacement_data[-1]+1))
@@ -315,10 +250,7 @@ class ForceDisplacementApp(ctk.CTk):
         # Update the velocity vs time graph
         self.ax_velocity_time.set_ylim(0, max(.25, max(self.velocity_data)))
         self.ax_velocity_time.set_xlim(0, max(10, self.time_data_d[-1]+2))
-#
-        # Update the canvas
-        #self.canvas.draw()
-#
+
     def update_plot(self, frame):
         self.line_force_disp.set_data(self.displacement_data, self.force_data)
         self.line_velocity_time.set_data(self.time_data_d, self.velocity_data)

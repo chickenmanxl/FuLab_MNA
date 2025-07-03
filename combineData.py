@@ -73,10 +73,10 @@ def process_excel_files(folder_path, output_path):
     logging.info('Done!')
 
 # Folder containing your Excel files
-folder_path = 'C:\\Users\\cneje\\Downloads\\2025_02_ClearCureTesting'
+folder_path = 'C:\\Users\\cneje\\Downloads\\2025-06-30_BM_MNAs'
 
 # Output file path
-output_file = 'C:\\Users\\cneje\\Downloads\\2025_02_ClearCureTesting\\combined_data.xlsx'
+output_file = 'C:\\Users\\cneje\\Downloads\\2025-06-30_BM_MNAs\\combined_data.xlsx'
 
 # Run the function to process files and create the output
 process_excel_files(folder_path, output_file)

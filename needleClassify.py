@@ -1,3 +1,5 @@
+### Must run on linux for GPU acceleration ###
+
 import os
 import numpy as np
 import tensorflow as tf

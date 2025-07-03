@@ -4,3 +4,4 @@ time
 threading
 matplotlib
 pandas
+openpyxl

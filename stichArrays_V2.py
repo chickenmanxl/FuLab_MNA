@@ -25,7 +25,8 @@ def normalize_and_renumber_arrays(image_dir):
                 try:
                     prefix = f"{parts[0]}_{parts[1]}"  # Combine the first two parts as a unique prefix
                     array_key = parts[2]  # The third part is the array identifier (e.g., `_5_`, `_5a_`)
-                    needle_number = int(parts[3].split('.')[0])  # Extract the needle number (n)
+                    needle_number = int(parts[-1].split('.')[0])  # Extract the needle number (n)
+                    print(needle_number)
                     group_key = f"{prefix}_{array_key}"  # Unique key combining prefix and array
                     if group_key not in files_by_group:
                         files_by_group[group_key] = []
@@ -91,7 +92,7 @@ def stitch_images(image_dir, output_dir, images_per_array=10):
             if len(parts) >= 4:  # Ensure the filename has at least four parts
                 if int(parts[0]) != 1:
                     try:
-                        needle_number = int(parts[3].split('.')[0])  # Extract the needle number (n)
+                        needle_number = int(parts[-1].split('.')[0])  # Extract the needle number (n)
                         # Identify which array the needle belongs to
                         array_number = (needle_number - 1) // images_per_array
                         group_key = '_'.join(parts[:3]) + f"_{array_number}"
@@ -108,7 +109,7 @@ def stitch_images(image_dir, output_dir, images_per_array=10):
         files.sort(key=lambda x: x[0])  # Sort by needle number
 
         # Open all images
-        images = [Image.open(os.path.join(image_dir, f[1])).rotate(-90, expand=True) for f in files]
+        images = [Image.open(os.path.join(image_dir, f[1])).rotate(90, expand=True) for f in files]
 
         # Calculate total width and max height for the output image
         total_width = sum(img.width for img in images)
@@ -124,15 +125,15 @@ def stitch_images(image_dir, output_dir, images_per_array=10):
             x_offset += img.width
 
         # Save the combined image
-        output_filename = f"{group_key}_combined.bmp"
+        output_filename = f"{group_key}_combined_before.bmp"
         output_path = os.path.join(output_dir, output_filename)
         new_image.save(output_path)
         print(f"Saved combined image: {output_path}")
         new_key += 1
 
 # Define your input and output directories
-image_dir = 'C:\\Users\\cneje\\Downloads\\2024_12_3_PigSkin_and_PF_Hand_Insertion'  # Directory containing your cropped images
-output_dir = 'C:\\Users\\cneje\\Downloads\\2024_12_3_PigSkin_and_PF_Hand_Insertion\\combined'  # Directory to save the combined images
+image_dir = 'C:\\Users\\cneje\\Downloads\\20um_tip_bm\\20um_tip_bm'  # Directory containing your cropped images
+output_dir = 'C:\\Users\\cneje\\Downloads\\2025-06-30_BM-MNAs_IMG\\combined'  # Directory to save the combined images
 
 #normalize_and_renumber_files(image_dir)
 stitch_images(image_dir, output_dir)

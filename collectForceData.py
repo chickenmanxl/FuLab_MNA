@@ -1,4 +1,5 @@
 # This program reads force data from serial and plots in real-time
+### DEPRACATED ###
 import customtkinter as ctk
 import serial
 import time
@@ -92,15 +93,18 @@ class ForceDataApp(ctk.CTk):
         self.grid_columnconfigure(2, weight=1)
         self.grid_rowconfigure(5, weight=1)
 
+    # Start data collection
     def start_collection(self):
         self.collecting_data = True
         self.start_button.configure(state=ctk.DISABLED)
         threading.Thread(target=self.collect_data, daemon=True).start()
 
+    # Stop data collection
     def stop_collection(self):
         self.collecting_data = False
         self.start_button.configure(state=ctk.NORMAL)
 
+    # While collecting data
     def collect_data(self):
         # Open serial connection
         try:
@@ -116,7 +120,7 @@ class ForceDataApp(ctk.CTk):
         print('3f0d')
 
         readings_per_sec = self.readings_per_sec_var.get()
-        delay = 1 / readings_per_sec
+        delay = 1 / readings_per_sec # calculate necessary delay in measurements for consistancy
         start_force = self.start_force_var.get()
 
         while True:
