@@ -154,7 +154,14 @@ class MicroneedleMeasurementApp:
 
     def mark_flawed(self):
         comment = self.comment_entry.get()
-        self.data.append([self.image_path, "Flawed", "", "", comment])
+        # Convert file path to useful data lables
+        filename = os.path.basename(self.image_path)
+        name_parts = filename.split('_')
+        filtered_name = name_parts[0] + '_' + name_parts[1] + '_' + name_parts[2]
+        needle_number = name_parts[-1].rsplit('.', 1)[0]
+        
+        # Store data
+        self.data.append([filtered_name, needle_number, "", "", "", "", f"{comment}, flawed"])
         self.current_image_index += 1
         self.load_next_image()
 
